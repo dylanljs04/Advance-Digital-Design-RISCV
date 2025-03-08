@@ -4,7 +4,7 @@ module instruction_memory (output logic [31:0] Instr,
 logic [7:0] IM [0:255];
 logic [31:0] prog [0:63];
 logic [31:0] PC_divided_by_4;
-
+ 
 initial
 $readmemh ("program.txt", prog);
 

@@ -1,8 +1,12 @@
 module data_memory_and_io (output logic [31:0] RD, CPUOut,
                             input logic [31:0] A, WD, CPUIn,
                             input logic WE, CLK);
-
+ 
 logic [7:0] DM [0:1023];
+
+// RDsel seclect whether to read from CPUIn or memory
+// Write Enable for CPUout is WEOut
+// Write Enable for Memory is WEM
 logic RDsel, WEM, WEOut;
 
 assign RDsel = (A == 32'h7FFFFFFC) ? 1 : 0; 

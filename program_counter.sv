@@ -3,7 +3,21 @@ module program_counter (output logic [31:0] PC, PCPlus4,
                         input logic [1:0] PCSrc, 
                         input logic Reset, CLK);
 
-// Enter your code here
+logic [31:0] PCNext;
+
+always_comb begin
+    case (PCSrc)
+        2'b00: PCNext = PC + 4;
+        2'b01: PCNext = PCTarget;
+        2'b10: PCNext = ALUResult;
+        default: PCNext = 32'd0;
+    endcase
+end
+
+always_ff @ (posedge CLK) begin
+    if (Reset) PC <= 32'd0;
+    else PC <= PCNext;
+end
 
 endmodule
 
