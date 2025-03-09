@@ -5,9 +5,11 @@ module program_counter (output logic [31:0] PC, PCPlus4,
 
 logic [31:0] PCNext;
 
+assign PCPlus4 = PC + 4;
+
 always_comb begin
     case (PCSrc)
-        2'b00: PCNext = PC + 4;
+        2'b00: PCNext = PCPlus4;
         2'b01: PCNext = PCTarget;
         2'b10: PCNext = ALUResult;
         default: PCNext = 32'd0;

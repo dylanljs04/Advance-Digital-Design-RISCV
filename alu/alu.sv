@@ -18,7 +18,6 @@ assign shiftResult = (ALUControl[4]) ? SrcA >> SrcB[4:0] : SrcA << SrcB[4:0];
 assign arithResult = (ALUControl[3]) ? SrcA - SrcB : SrcA + SrcB;
 assign sltResult = (arithResult[31]) ? 32'd1 : 32'd0;
 
-
 // Logic Operations
 assign logicResult = (ALUControl[2]) ? (SrcA | SrcB) : (SrcA & SrcB);
 
