@@ -2,45 +2,25 @@
         .globl _start
 
 _start:
-        # Load CPUIn address (0x7FFFFFFC) using lui and addi
-        lui     t0, 0x7FFFF       # Upper 20 bits of 0x7FFFFFFC
-        addi    t0, t0, 0xFF4     # Lower 12 bits (0xFFC) to form 0x7FFFFFFC
+        # lui t0, = 0x0000       # load CPUin value into t0
+        addi t0, zero, 0x01F        # load CPUin value into t0
+        add t1, zero, zero            # initialise sum to 0 
+        add t2, zero,  zero            # initialise i to 0 
+        addi t3, zero, 0            # initialise t3 to 0      
+        addi t4, zero, 8            # initialise t4 to 8
 
-        # Load CPUIn value from memory
-        lw      t1, 0(t0)         # Load CPUIn into t1
+loop1:
+        andi t3, t0, 1        # check if the LSB of t0 is 1
+        beq t3, zero, loop2  # if LSB is zero, jump to loop2
+        addi t1, t1, 1        # increment sum by 1
 
-        # Initialize sum = 0
-        lui     t2, 0             # Set sum (t2) upper 20 bits to 0
-        addi    t2, t2, 0         # Set sum (t2) lower 12 bits to 0
+loop2:
+        srli t0, t0, 1        # right shift t0 by 1
+        addi t2, t2, 1        # increment i by 1
+        bne t2, t4, loop1     # if i is not equal to 8, jump to loop1
 
-        # Initialize i = 0
-        lui     t3, 0             # Set i (t3) upper 20 bits to 0
-        addi    t3, t3, 0         # Set i (t3) lower 12 bits to 0
-
-loop:
-        # Compare i == 8 (Exit Condition)
-        lui     t4, 0             # Load upper 20 bits of 8
-        addi    t4, t4, 8         # Load lower 12 bits of 8
-        beq     t3, t4, done      # if (i == 8) exit loop
-
-        # Check LSB of t1 (a[0])
-        andi    t5, t1, 1         # t5 = a & 1 (Extract LSB)
-        beq     t5, zero, skip    # If LSB is 0, skip incrementing sum
-        addi    t2, t2, 1         # sum = sum + 1
-
-skip:
-        # Right shift a (t1) by 1 bit
-        srai    t1, t1, 1         # a >>= 1
-
-        # Increment i
-        addi    t3, t3, 1         # i++
-
-        # Instead of "j loop", use bne to branch back
-        bne     t3, t4, loop      # if (i != 8) go back to loop
-
-done:
-        # Store sum back to 0x7FFFFFFC as CPUOut
-        sw      t2, 0(t0)         # Store sum in CPUOut
+        add t5, zero, zero        # store sum in t0
+        sw t1, 0x0(t5)        # Store sum in CPUOut
 
 stop:
         # Instead of "j stop", use an infinite loop
