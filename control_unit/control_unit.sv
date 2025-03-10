@@ -152,7 +152,7 @@ module control_unit (output logic [1:0] PCSrc,
                 ImmSrc = 3'b011;
                 ResultSrc = 2'b00;
                 MemWrite = 0;
-                ALUControl = 5'b00010;
+                ALUControl = 5'b00000;
                 PCSrc = 2'b00;
             end
 
