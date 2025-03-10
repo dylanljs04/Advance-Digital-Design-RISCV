@@ -1,0 +1,44 @@
+lui x31, 0x80000          
+addi x31, x31, 0xFFC  
+addi x1, zero, 0x800  
+sw x1, 0x0(x31)           
+addi x1, zero, 1       
+addi x2, zero, 3 
+add x3, x1, x2               
+sw x3, 0x0(x31) 
+sub x3, x1, x2              
+sw x3, 0x0(x31) 
+or x3, x1, x2                 
+sw x3, 0x0(x31) 
+sll x3, x1, x2                  
+sw x3, 0x0(x31) 
+slt x3, x1, x2                 
+sw x3, 0x0(x31) 
+andi x3, x2, 0x007       
+sw x3, 0x0(x31) 
+srli x3, x2, 1                  
+sw x3, 0x0(x31) 
+slti x3, x1, 0xFFF           
+sw x3, 0x0(x31) 
+sw x2, 0x0(zero) 
+lw x3, 0x0(zero)           
+sw x3, 0x0(x31) 
+label1: 
+beq x1, x2, label1        
+bne x1, x2, label2        
+addi x1, zero, 0x123 
+sw x3, 0x0(x31) 
+label2: 
+blt x2, x1, label2         
+bge x2, x1, label3       
+addi x1, zero, 0x456 
+sw x3, 0x0(x31) 
+label3: 
+jal x4, 16                        
+addi x3, zero, 0x789 
+sw x3, 0x0(x31) 
+jal zero, finish 
+addi x3, zero, 0x111 
+sw x3, 0x0(x31) 
+jalr zero, x4, 0
+finish:
