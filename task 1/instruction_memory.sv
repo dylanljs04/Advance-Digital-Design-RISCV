@@ -7,7 +7,7 @@ logic [31:0] PC_divided_by_4;
  
 initial
 // $readmemh ("program.txt", prog);
-$readmemh ("program.txt", prog);
+$readmemh ("instruction_txt/task2_1_program.txt", prog);
 
 assign Instr = prog[PC_divided_by_4];
 
